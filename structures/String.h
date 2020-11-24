@@ -79,6 +79,17 @@ Status *String_SetValue(String *pStr, char *str);
 char String_GetCharAt(String *pStr, int index);
 
 /*
+ * String_GetCharAt
+ * Insert a character after the character of given index
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     int index: the index of the character
+ * @return:
+ *     Status*
+ */
+Status *String_InsertCharAt(String *pStr, int index, char ch);
+
+/*
  * String_SetCharAt
  * Change a character of a string by the given index
  * @param:

@@ -66,6 +66,25 @@ char String_GetCharAt(String *pStr, int index) {
     return pStr->str[i];
 }
 
+Status *String_InsertCharAt(String *pStr, int index, char ch) {
+    int length = String_GetLength(pStr);
+    if (index >= length || index < 0) {
+        return Status_OutOfIndex();
+    }
+    if (index == length - 1) {
+        return String_AppendChar(pStr, ch);
+    } else {
+        String *pTempStr = String_Slice(pStr, 0, index);
+        String_AppendChar(pTempStr, ch);
+        String *pTailStr = String_Slice(pStr, index + 1, length - 1);
+        String_ConcatString(pTempStr, pTailStr->str);
+        String_SetValue(pStr, pTempStr->str);
+        String_Free(pTempStr);
+        String_Free(pTailStr);
+    }
+    return Status_ActionSucceeded();
+}
+
 Status *String_SetCharAt(String *pStr, int index, char ch) {
     int length = String_GetLength(pStr);
     if (index >= length || index < 0) {
