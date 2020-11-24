@@ -79,6 +79,22 @@ String *ExtractFirstNumberFromString(char *str) {
     return String_Slice(pSrcString, op, ed);
 }
 
+char *PreprocessSign(char *srcString) {
+    String *pTempStr = String_NewStringFrom(srcString);
+    int length = strlen(srcString);
+    if (srcString[0] == '-' || srcString == '+') {
+        String_InsertCharAtHead(pTempStr, '0');
+    }
+    for (int i = 0; i < length; i++) {
+        if (pTempStr->str[i] == '(' && (pTempStr->str[i + 1] == '-' || pTempStr->str[i + 1] == '+')) {
+            String_InsertCharAt(pTempStr, i, '0');
+        }
+    }
+    char *outputStr = String_ToCString(pTempStr);
+    String_Free(pTempStr);
+    return outputStr;
+}
+
 char *InfixToSuffix(char *srcString) {
     char baseStackSign = '#';
 
