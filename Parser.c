@@ -13,7 +13,6 @@ int GetPriority(char operator) {
 }
 
 String *ExtractFirstNumberFromString(char *str) {
-    //(372 - 6.7) * 7
     if (str == NULL) {
         return NULL;
     }
@@ -33,19 +32,24 @@ String *ExtractFirstNumberFromString(char *str) {
     }
 
     if (!isdigit(str[i + 1]) && (str[i + 1] != '.')) {
-        // If the number is a single digit
-        return String_Slice(pSrcString, op, op);
+        // if the number is a single digit
+        ed = op;
+        // if the number has a negative or positive sign
+        if (pSrcString->str[op - 1] == '-' || pSrcString->str[op - 1] == '+') {
+            op--;
+        }
+        return String_Slice(pSrcString, op, ed);
     } else if (isdigit(str[i + 1])) {
-        // If the number is has a multi-digit integer part
+        // if the number is has a multi-digit integer part
         while (isdigit(str[i + 1])) {
             i++;
         }
 
         if (!isdigit(str[i + 1]) && (str[i + 1] != '.')) {
-            // If the number is a multi-digit integer
+            // if the number is a multi-digit integer
             ed = i;
         } else if (str[i + 1] == '.') {
-            // If the number is a float number with multi-digit integer part
+            // if the number is a float number with multi-digit integer part
             i++;
             while (isdigit(str[i + 1])) {
                 i++;
@@ -61,6 +65,17 @@ String *ExtractFirstNumberFromString(char *str) {
     } else {
         return String_NewStringFrom("ERROR");
     }
+
+    // if the number has a negative or positive sign
+    if (pSrcString->str[op - 1] == '-' || pSrcString->str[op - 1] == '+') {
+        op--;
+    }
+
+    // if the number ending with a dot but is not a float number
+    if (pSrcString->str[ed] == '.' && !isdigit(pSrcString->str[ed + 1])) {
+        ed--;
+    }
+
     return String_Slice(pSrcString, op, ed);
 }
 

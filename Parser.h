@@ -21,6 +21,8 @@ int GetPriority(char operator);
 
 String *ExtractFirstNumberFromString(char *str);
 
+char *PreprocessSign(char *srcString);
+
 /*
  * InfixToSuffix
  * Convert an infix expression to suffix expression
