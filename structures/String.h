@@ -79,7 +79,7 @@ Status *String_SetValue(String *pStr, char *str);
 char String_GetCharAt(String *pStr, int index);
 
 /*
- * String_GetCharAt
+ * String_InsertCharAt TODO
  * Insert a character after the character of given index
  * @param:
  *     String *pStr: a pointer to string struct
@@ -88,6 +88,8 @@ char String_GetCharAt(String *pStr, int index);
  *     Status*
  */
 Status *String_InsertCharAt(String *pStr, int index, char ch);
+
+Status *String_InsertCharAtHead(String *pStr, char ch);
 
 /*
  * String_SetCharAt

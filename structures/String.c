@@ -85,6 +85,21 @@ Status *String_InsertCharAt(String *pStr, int index, char ch) {
     return Status_ActionSucceeded();
 }
 
+Status *String_InsertCharAtHead(String *pStr, char ch) {
+    if (pStr == NULL) {
+        return Status_NullPointerError();
+    }
+    String *pTempStr = String_NewString(DEFAULT_STRING_SIZE);
+    if (pTempStr == NULL) {
+        return Status_NullPointerError();
+    }
+    String_AppendChar(pTempStr, ch);
+    String_ConcatString(pTempStr, pStr->str);
+    String_SetValue(pStr, pTempStr->str);
+    String_Free(pTempStr);
+    return Status_ActionSucceeded();
+}
+
 Status *String_SetCharAt(String *pStr, int index, char ch) {
     int length = String_GetLength(pStr);
     if (index >= length || index < 0) {
