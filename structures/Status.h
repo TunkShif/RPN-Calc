@@ -96,6 +96,16 @@ Status *Status_OutOfIndex(void);
 Status *Status_NullPointerError(void);
 
 /*
+ * Status_FileNotFound
+ * Return a status pointer with a message
+ * saying that you're trying to open a file
+ * which doesn't exist
+ * @return:
+ *     Status *
+ */
+Status *Status_FileNotFound(void);
+
+/*
  * Status_CustomFailedMsg
  * Return a status pointer with custom message
  * @return:
