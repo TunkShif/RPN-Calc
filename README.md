@@ -2,6 +2,14 @@
 
 本项目是一个用 C 语言实现的简易的逆波兰表达式 (_Reverse Polish Notation_) 求值程序.
 
+## 使用方法
+
+```bash
+RPN-Calc.exe # 进入交互界面
+RPN-Calc.exe -e <expression> # 计算表达式
+RPN-Calc.exe -f <filename> # 从文件中批量计算
+```
+
 ## 项目进度
 
 - 数据结构
@@ -10,13 +18,13 @@
   - [x] 自定义的字符串类型 String
 - 软件逻辑
   - [x] 工具函数 Utils
-  - [ ] 文件读写操作 Files
+  - [x] 文件读写操作 Files (有待完善)
   - [ ] 错误提示系统 Exception
   - [x] 表达式解析 Parser (有待完善)
   - [x] 表达式计算 Calculator (有待完善)
 
 ## Bugs & TODOS
-- 处理表达式中的正负号
+- ~~处理表达式中的正负号~~
 - ~~不能解析表达式中的负数~~
 - ~~表达式稍微复杂一点内存莫名其妙地会爆 =_=||~~
 
