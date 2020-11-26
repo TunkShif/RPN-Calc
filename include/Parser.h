@@ -3,8 +3,8 @@
 #include <ctype.h>
 #include <string.h>
 #include "Utils.h"
-#include "structures/String.h"
-#include "structures/LinkedStack.h"
+#include "String.h"
+#include "LinkedStack.h"
 
 /*
  * GetPriority
@@ -25,12 +25,12 @@ char *PreprocessSign(char *srcString);
 
 /*
  * InfixToSuffix
- * Convert an infix expression to suffix expression
+ * Convert an infix expression to suffix expression,
+ * return null if the expression is invalid
  * @param:
  *     char *srcString: the source string of the infix expression
- *     char *destString: the destination string of the suffix expression
  * @return:
- *     Status*
+ *     char*
  */
 char *InfixToSuffix(char *srcString);
 

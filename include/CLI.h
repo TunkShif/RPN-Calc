@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include "Parser.h"
 #include "Calculator.h"
-#include "structures/String.h"
+#include "File.h"
+#include "String.h"
 #define MAX_INPUT_NUMBER 100
 #define WELCOME_MESSAGE "RPN-Calc\nHelp: Input an arithmetic expression and get the value, q for exit"
 #define PROMPT_MESSAGE "Input an expression: "
@@ -15,4 +16,7 @@ void PrintBar(int n);
 
 void PromptLoop(void);
 
+void CalcFromFile(char *filePath);
+
+Status *CalcCallBack(char *str);
 #endif

@@ -1,4 +1,4 @@
-#include "String.h"
+#include "../include/String.h"
 
 String *String_NewString(int size) {
     char *str = (char *) malloc(sizeof(char) * size);

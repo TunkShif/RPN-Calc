@@ -1,4 +1,4 @@
-#include "LinkedStack.h"
+#include "../include/LinkedStack.h"
 
 LinkedStack *LinkedStack_NewStack(void) {
     LinkedStack *pStack = (LinkedStack *) malloc(sizeof(LinkedStack));

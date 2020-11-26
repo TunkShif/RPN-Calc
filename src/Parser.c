@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include "../include/Parser.h"
 
 int GetPriority(char operator) {
     switch (operator) {
@@ -90,6 +90,9 @@ char *PreprocessSign(char *srcString) {
             String_InsertCharAt(pTempStr, i, '0');
         }
     }
+    if (pTempStr->str[String_GetLength(pTempStr) - 1] == '\n') {
+        String_RemoveLastChar(pTempStr);
+    }
     char *outputStr = String_ToCString(pTempStr);
     String_Free(pTempStr);
     return outputStr;
@@ -101,6 +104,8 @@ char *InfixToSuffix(char *srcString) {
     if (srcString == NULL) {
         return NULL;
     }
+
+    srcString = PreprocessSign(srcString);
 
     int length = strlen(srcString);
     LinkedStack *pOperatorStack = LinkedStack_NewStack();

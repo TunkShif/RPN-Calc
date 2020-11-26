@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "../include/LinkedList.h"
 
 LinkedListNode *LinkedList_NewNode(void *pData) {
     LinkedListNode *pNode = (LinkedListNode *) malloc(sizeof(LinkedListNode));

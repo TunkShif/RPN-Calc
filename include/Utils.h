@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
-#include "structures/Status.h"
+#include "Status.h"
 
 /*
  * IsOperator

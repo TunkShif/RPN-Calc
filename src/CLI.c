@@ -1,4 +1,4 @@
-#include "CLI.h"
+#include "../include/CLI.h"
 
 void PrintBar(int n) {
     for (int i = 0; i < n; i++) {
@@ -43,4 +43,26 @@ void PromptLoop(void) {
     currentExpression = NULL;
     String_Free(pStr);
     puts("BYE~");
+}
+
+void CalcFromFile(char *filePath) {
+    Status *pStatus = NULL;
+    pStatus = FileTraverseLines(filePath, CalcCallBack);
+    if (pStatus->code == ERROR) {
+        puts("WRONG");
+    }
+}
+
+Status *CalcCallBack(char *str) {
+    char *resultFilePath = "result.txt";
+    char *exp = InfixToSuffix(str);
+    float result = 0;
+    if (exp == NULL) {
+        return Status_CustomFailedMsg("ERROR: Invalid Expression");
+    }
+    result = CalculateFromSuffixExpression(exp);
+    FILE *fp = fopen(resultFilePath, "a+");
+    fprintf(fp, "%.2f\n", result);
+    fclose(fp);
+    return Status_ActionSucceeded();
 }

@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "../include/Stack.h"
 #define DEBUG 0
 
 GenericStack *Stack_NewStack(int stackSize, int elementSize) {

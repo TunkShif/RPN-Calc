@@ -2,7 +2,7 @@
 #define RPN_CALC_GENERICSTACK_H
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../Status.h"
+#include "../include/Status.h"
 #define DEFAULT_STACK_INIT_SIZE 100
 #define DEFAULT_STACK_INCREMENT_SIZE 50
 

@@ -1,4 +1,4 @@
-#include "Status.h"
+#include "../include/Status.h"
 
 Status *Status_NewStatus(Code code, char *msg) {
     Status *pStatus = (Status *) malloc(sizeof(Status));

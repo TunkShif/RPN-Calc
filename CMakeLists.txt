@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.17)
 project(RPN_Calc C)
 
 set(CMAKE_C_STANDARD 99)
-add_executable(RPN_Calc main.c Utils.c Utils.h structures/Stack.h structures/Stack.c structures/LinkedList.h structures/LinkedList.c structures/Status.c structures/Status.h Parser.c Parser.h structures/LinkedStack.c structures/LinkedStack.h structures/String.c structures/String.h File.c File.h Calculator.c Calculator.h CLI.c CLI.h Config.c Config.h)
+add_executable(RPN_Calc src/main.c src/Utils.c include/Utils.h include/Stack.h src/Stack.c include/LinkedList.h src/LinkedList.c src/Status.c include/Status.h src/Parser.c include/Parser.h src/LinkedStack.c include/LinkedStack.h src/String.c include/String.h src/File.c include/File.h src/Calculator.c include/Calculator.h src/CLI.c include/CLI.h src/Config.c include/Config.h)

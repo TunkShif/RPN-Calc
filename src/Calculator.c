@@ -1,4 +1,4 @@
-#include "Calculator.h"
+#include "../include/Calculator.h"
 
 float CalculateFromSuffixExpression(char *str) {
     int length = strlen(str);
