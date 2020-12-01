@@ -82,7 +82,7 @@ String *ExtractFirstNumberFromString(char *str) {
 char *PreprocessSign(char *srcString) {
     String *pTempStr = String_NewStringFrom(srcString);
     int length = strlen(srcString);
-    if (srcString[0] == '-' || srcString == '+') {
+    if (srcString[0] == '-' || srcString[0] == '+') {
         String_InsertCharAtHead(pTempStr, '0');
     }
     for (int i = 0; i < length; i++) {
