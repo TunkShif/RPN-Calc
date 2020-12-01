@@ -7,6 +7,16 @@ void PrintBar(int n) {
     putchar('\n');
 }
 
+void PrintLogo(void) {
+    char *logo = "____________ _   _        _____       _      \n"
+                 "| ___ \\ ___ \\ \\ | |      /  __ \\     | |     \n"
+                 "| |_/ / |_/ /  \\| |______| /  \\/ __ _| | ___ \n"
+                 "|    /|  __/| . ` |______| |    / _` | |/ __|\n"
+                 "| |\\ \\| |   | |\\  |      | \\__/\\ (_| | | (__ \n"
+                 "\\_| \\_\\_|   \\_| \\_/       \\____/\\__,_|_|\\___|";
+    puts(logo);
+}
+
 void PromptLoop(void) {
     bool flag = true;
     bool hasQuitSign = false;
@@ -15,6 +25,7 @@ void PromptLoop(void) {
     char *currentExpression = NULL;
     String *pStr = String_NewString(MAX_INPUT_NUMBER);
 
+    PrintLogo();
     puts(WELCOME_MESSAGE);
     PrintBar(50);
 

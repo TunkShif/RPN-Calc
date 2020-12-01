@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include "../include/CLI.h"
 
-// TODO
-// Project Structure
-
 int main(int argc, char *argv[]) {
     if (argc == 1) {
         PromptLoop();
