@@ -19,8 +19,28 @@
  */
 int GetPriority(char operator);
 
+/*
+ * ExtractFirstNumberFromString
+ * Find the first number from a string.
+ * e.g. given "test3.14test", return "3.14"
+ * Return NULL if there's no number in it
+ * @param:
+ *     char *str: a string containing number
+ * @return:
+ *     String*
+ */
 String *ExtractFirstNumberFromString(char *str);
 
+/*
+ * PreprocessSign
+ * Preprocess an expression with positive or
+ * negative sign.
+ * e.g. given "(+5)-(-7)", return "(0+5)-(0-7)"
+ * @param:
+ *     char *str: a string containing number
+ * @return:
+ *     char*
+ */
 char *PreprocessSign(char *srcString);
 
 /*

@@ -52,7 +52,7 @@ String *String_NewStringFrom(char *str);
  *     String *pStr: a pointer to string struct
  *     int newSize: a size greater than its original size
  * @return:
- *     String*
+ *     Status*
  */
 Status *String_IncreaseSize(String *pStr, int newSize);
 
@@ -79,7 +79,7 @@ Status *String_SetValue(String *pStr, char *str);
 char String_GetCharAt(String *pStr, int index);
 
 /*
- * String_InsertCharAt TODO
+ * String_InsertCharAt
  * Insert a character after the character of given index
  * @param:
  *     String *pStr: a pointer to string struct
@@ -89,6 +89,15 @@ char String_GetCharAt(String *pStr, int index);
  */
 Status *String_InsertCharAt(String *pStr, int index, char ch);
 
+/*
+ * String_InsertCharAtHead
+ * Insert a character at the head of the string
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     int index: the index of the character
+ * @return:
+ *     Status*
+ */
 Status *String_InsertCharAtHead(String *pStr, char ch);
 
 /*
@@ -150,14 +159,60 @@ Status *String_ConcatString(String *pStr, char *str);
  */
 Status *String_AppendChar(String *pStr, char ch);
 
+/*
+ * String_IsSingleChar
+ * Check if a string only has a single character
+ * @param:
+ *     String *pStr: a pointer to string struct
+ * @return:
+ *     bool
+ */
 bool String_IsSingleChar(String *pStr);
 
+/*
+ * String_HasChar
+ * Check if a string contains the given character
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     char key: the given character
+ * @return:
+ *     bool
+ */
 bool String_HasChar(String *pStr, char key);
 
+/*
+ * String_HasCWord
+ * Check if a string contains the given word
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     char *key: the given word
+ * @return:
+ *     bool
+ */
 bool String_HasWord(String *pStr, char *key);
 
+/*
+ * String_FindFirstCharIndex
+ * Find the first appearance of the given character
+ * and then return the index. Return -1 if the
+ * character doesn't exist
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     char *key: the given word
+ * @return:
+ *     bool
+ */
 int String_FindFirstCharIndex(String *pStr, char key);
 
+/* String_ReplaceWithChar
+ * Find the given character and replace it with a new character
+ * @param:
+ *     String *pStr: a pointer to string struct
+ *     char *key: the given character
+ *     char *key: the character for replace
+ * @return:
+ *     Status*
+ */
 Status *String_ReplaceWithChar(String *pStr, char key, char replace);
 
 /*
