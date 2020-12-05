@@ -204,7 +204,6 @@ char *String_ToCString(String *pStr) {
         return NULL;
     }
     strcpy(str, pStr->str);
-//    strncpy(str, pStr->str, length); // TODO
     str[length] = '\0';
     return str;
 }

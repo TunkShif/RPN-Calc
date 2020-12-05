@@ -34,6 +34,7 @@ Status *Status_NullPointerError(void) {
 
 Status *Status_FileNotFound(void) {
     Status *pStatus = Status_NewStatus(ERROR, "ERROR: File not found");
+    return pStatus;
 }
 
 Status *Status_ActionSucceeded(void) {

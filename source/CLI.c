@@ -23,7 +23,7 @@ void PromptLoop(void) {
     float result = 0;
     char tempString[MAX_INPUT_NUMBER] = {'\0'};
     char *currentExpression = NULL;
-    String *pStr = String_NewString(MAX_INPUT_NUMBER);
+    String *pStr = String_NewString(MAX_INPUT_NUMBER); // TODO
 
     PrintLogo();
     puts(WELCOME_MESSAGE);

@@ -19,10 +19,9 @@ int main(int argc, char *argv[]) {
                 float result = CalculateFromSuffixExpression(exp);
                 printf("%s = %.2f", argv[2], result);
             }
+        } else if (strcmp(argv[1], "-f") == 0) {
+            CalcFromFile(argv[2]);
         }
-//        else if (strcmp(argv[1], "-f") == 0) {
-//            CalcFromFile(argv[2]);
-//        }
     } else {
         puts("WRONG COMMAND!");
     }

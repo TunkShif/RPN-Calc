@@ -12,6 +12,10 @@
 #define INVALID_EXPRESSION_MESSAGE "Invalid expression, try again!"
 #define DIVIDE_ZERO_MESSAGE "Can't divide by zero, input again!"
 
+/*
+ * PrintBar
+ * Print a series of '=',
+ */
 void PrintBar(int n);
 
 void PrintLogo(void);
