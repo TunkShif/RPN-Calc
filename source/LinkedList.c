@@ -63,20 +63,6 @@ int LinkedList_InsertAtHead(LinkedList *pList, void *pData) {
     return 0;
 }
 
-int LinkedList_InsertAfter(LinkedList *pList, LinkedListNode *pNode, void *pData) {
-    if (pNode == NULL) {
-        return LinkedList_InsertAtHead(pList, pData);
-    }
-    LinkedListNode *pNewNode = LinkedList_NewNode(pData);
-    if (pNewNode == NULL) {
-        return 1;
-    }
-    pNewNode->pNextNode = pNode->pNextNode;
-    pNode->pNextNode = pNewNode;
-    pList->length++;
-    return 0;
-}
-
 int LinkedList_Append(LinkedList *pList, void *pData) {
     LinkedListNode *pNewNode = LinkedList_NewNode(pData);
     if (pNewNode == NULL) {
@@ -182,20 +168,20 @@ void LinkedList_Clear(LinkedList *pList, void (*freeData)()) {
     pList->length = 0;
 }
 
-//int LinkedList_Traverse(LinkedList *pList, int (*func)()) {
-//    if (LinkedList_IsEmpty(pList)) {
-//        return Status_ListEmptyError();
-//    }
-//    LinkedListNode *pCurrentNode;
-//    int pStatus;
-//    for (pCurrentNode = pList->pHeadNode; pCurrentNode != NULL; pCurrentNode = pCurrentNode->pNextNode) {
-//        pStatus = func(LinkedList_GetDataFromNode(pCurrentNode));
-//        if (pStatus->code == ERROR) {
-//            return pStatus;
-//        }
-//    }
-//    return 0;
-//}
+int LinkedList_Traverse(LinkedList *pList, int (*func)()) {
+    if (LinkedList_IsEmpty(pList)) {
+        return 1;
+    }
+    LinkedListNode *pCurrentNode;
+    int pStatus;
+    for (pCurrentNode = pList->pHeadNode; pCurrentNode != NULL; pCurrentNode = pCurrentNode->pNextNode) {
+        int status = func(LinkedList_GetDataFromNode(pCurrentNode));
+        if (status == 1) {
+            return status;
+        }
+    }
+    return 0;
+}
 
 void LinkedList_FreeNode(LinkedListNode *pNode, void (*freeData)()) {
     if (pNode != NULL) {

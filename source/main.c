@@ -6,8 +6,8 @@
 #define MAX_INPUT_LENGTH 100
 #define WELCOME_MESSAGE "Input an expression, type q to quit"
 #define PROMPT_MESSAGE ">>> "
-#define CANT_OPEN_FILE_MESSAGE "ERROR: Cannot open the given file! Exiting..."
-#define BATCH_DONE_MESSAGE "Info: Calculation has been done, check the result.txt file!"
+#define CANT_OPEN_FILE_MESSAGE "ERROR: Cannot open the given file! Exiting...\n"
+#define BATCH_DONE_MESSAGE "INFO: Calculation has been done, check the result.txt file!\n"
 #define HELP_INFO "Calculator Help\n" \
                   "Calc                 Enter the REPL\n" \
                   "    -e <expression>  Calculate from the given expression\n" \

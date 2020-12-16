@@ -28,7 +28,7 @@ typedef struct LinkedList {
  * LinkedList_NewNode
  * Create a new node
  * @param:
- *     ElementType pData: a pointer to the data variable
+ *     void *pData: a pointer to the data variable
  * @return:
  *     LinkedListNode*: a pointer to the newly created node
  */
@@ -40,7 +40,7 @@ LinkedListNode *LinkedList_NewNode(void *pData);
  * @param:
  *     LinkedListNode* pNode: a pointer to a node
  * @return:
- *     ElementType: a pointer to the data variable
+ *     void*: a pointer to the data variable
  */
 void *LinkedList_GetDataFromNode(LinkedListNode *pNode);
 
@@ -57,6 +57,8 @@ LinkedList *LinkedList_NewList(void);
  * Check whether the list is empty
  * @param:
  *     LinkedList *pList: a pointer to the list
+ * @return:
+ *     bool
  */
 bool LinkedList_IsEmpty(LinkedList *pList);
 
@@ -65,6 +67,8 @@ bool LinkedList_IsEmpty(LinkedList *pList);
  * Get the current length of a list
  * @param:
  *     LinkedList *pList: a pointer to the list
+ * @return:
+ *     int: the length of the list
  */
 int LinkedList_Length(LinkedList *pList);
 
@@ -84,9 +88,9 @@ LinkedListNode *LinkedList_GetNodeAt(LinkedList *pList, int index);
  * Insert a new node at the head of the list
  * @param:
  *     LinkedList *pList: a pointer to the list
- *     ElementType pData: a pointer to the data variable
+ *     void* pData: a pointer to the data variable
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_InsertAtHead(LinkedList *pList, void *pData);
 
@@ -95,9 +99,9 @@ int LinkedList_InsertAtHead(LinkedList *pList, void *pData);
  * Append a new node at the end of the list
  * @param:
  *     LinkedList *pList: a pointer to the list
- *     ElementType pData: a pointer to the data variable
+ *     void* pData: a pointer to the data variable
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_Append(LinkedList *pList, void *pData);
 
@@ -108,7 +112,7 @@ int LinkedList_Append(LinkedList *pList, void *pData);
  *     LinkedList *pList: a pointer to the list
  *     void (*freeData)(): a function used to free the data
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)());
 
@@ -119,7 +123,7 @@ int LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)());
  *     LinkedList *pList: a pointer to the list
  *     void (*freeData)(): a function used to free the data
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)());
 
@@ -131,7 +135,7 @@ int LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)());
  *     int index: the index of the node to be deleted
  *     void (*freeData)(): a function used to free the data
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)());
 
@@ -140,7 +144,7 @@ int LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)());
  * Find node by key
  * @param:
  *     LinkedList *pList: a pointer to the list
- *     ElementType pKey: specify which item is used to compare
+ *     void *pKey: specify which item is used to compare
  *     bool (*isEqual)(): a function used to compare the data with the key
  * @return:
  *     LinkedListNode*
@@ -154,7 +158,7 @@ LinkedListNode *LinkedList_FindNodeByKey(LinkedList *pList, void *pKey, bool (*i
  *     LinkedList *pList: a pointer to the list
  *     int (*func)(): a function operating on the stack element
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedList_Traverse(LinkedList *pList, int (*func)());
 

@@ -18,7 +18,7 @@ typedef struct LinkedStack {
  *     LinkedStack *pStack: a pointer to the stack-type struct
  *     int size: the initial size of the stack
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 LinkedStack *LinkedStack_NewStack(void);
 
@@ -50,9 +50,9 @@ int LinkedStack_Length(LinkedStack *pStack);
  * the value of which is 50
  * @param:
  *     LinkedStack *pStack: a pointer to the stack-type struct
- *     ElementType pElement: a pointer to the element to be added to the stack
+ *     void * pElement: a pointer to the element to be added to the stack
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedStack_Push(LinkedStack *pStack, void *pElement);
 
@@ -62,7 +62,7 @@ int LinkedStack_Push(LinkedStack *pStack, void *pElement);
  * @param:
  *     LinkedStack *pStack: a pointer to the stack-type struct
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 void *LinkedStack_Pop(LinkedStack *pStack, void (*freeData)());
 
@@ -72,9 +72,9 @@ void *LinkedStack_Pop(LinkedStack *pStack, void (*freeData)());
  * then pop the top element
  * @param:
  *     LinkedStack *pStack: a pointer to the stack-type struct
- *     ElementType *pDestination: specify the destination variable
+ *     void **pDestination: specify the destination variable
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)());
 
@@ -83,15 +83,11 @@ int LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)
  * Get the top element and assign it to another variable
  * @param:
  *     LinkedStack *pStack: a pointer to the stack-type struct
- *     ElementType *pDestination: specify the destination variable
+ *     void **pDestination: specify the destination variable
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 void *LinkedStack_GetTop(LinkedStack *pStack);
-
-char LinkedStack_GetTopChar(LinkedStack *pStack);
-
-int LinkedStack_GetTopInt(LinkedStack *pStack);
 
 /*
  * LinkedStack_Traverse
@@ -100,7 +96,7 @@ int LinkedStack_GetTopInt(LinkedStack *pStack);
  *     LinkedStack *pStack: a pointer to the stack-type struct
  *     int (*func)(): a function operating on the stack element
  * @return:
- *     Status*
+ *     int: 0 for SUCCESS, 1 for ERROR
  */
 int LinkedStack_Traverse(LinkedStack *pStack, int (*func)());
 

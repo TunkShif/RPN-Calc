@@ -49,13 +49,9 @@ void *LinkedStack_GetTop(LinkedStack *pStack) {
     return LinkedList_GetDataFromNode(pLastNode);
 }
 
-char LinkedStack_GetTopChar(LinkedStack *pStack) {
-    return *((char *) LinkedStack_GetTop(pStack));
+int LinkedStack_Traverse(LinkedStack *pStack, int (*func)()) {
+    return LinkedList_Traverse(pStack->pList, func);
 }
-
-//int LinkedStack_Traverse(LinkedStack *pStack, int (*func)()) {
-//    return LinkedList_Traverse(pStack->pList, func);
-//}
 
 void LinkedStack_Free(LinkedStack *pStack, void (*freeData)()) {
     LinkedList_FreeList(pStack->pList, freeData);

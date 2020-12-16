@@ -81,18 +81,18 @@ int Stack_GetTop(Stack *pStack, void *pDestination) {
     return 1;
 }
 
-//int Stack_Traverse(Stack *pStack, int (*func)()) {
-//    int i;
-//    int length = Stack_GetLength(pStack);
-//    int pStatus;
-//    for (i = 0; i < length; i++) {
-//        pStatus = func(pStack->pBase + i * pStack->elementSize);
-//        if (pStatus->code == ERROR) {
-//            return pStatus;
-//        }
-//    }
-//    return 1;
-//}
+int Stack_Traverse(Stack *pStack, int (*func)()) {
+    int i;
+    int length = Stack_GetLength(pStack);
+    int status;
+    for (i = 0; i < length; i++) {
+        status = func(pStack->pBase + i * pStack->elementSize);
+        if (status == 1) {
+            return status;
+        }
+    }
+    return 0;
+}
 
 void Stack_Free(Stack *pStack) {
     free(pStack->pBase);

@@ -6,6 +6,9 @@
 
 Token *Token_NewToken(Token *current, TokenType type, char *start, int length) {
     Token *token = calloc(1, sizeof(Token));
+    if (token == NULL) {
+        return NULL;
+    }
     token->type = type;
     memset(token->value, '\0', MAX_TOKEN_LENGTH);
     memcpy(token->value, start, length);

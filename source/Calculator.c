@@ -152,11 +152,15 @@ double CalculateFromSuffix(Token *token) {
                 *pTempResult = cos(*pTempNumberB);
             } else if (pCurrent->type == LOG) {
                 Stack_PopTo(pNumberStack, pTempNumberB);
+                if (*pTempNumberB < 0) {
+                    fprintf(stderr, DOMAIN_ERROR_MESSAGE);
+                    exit(EXIT_FAILURE);
+                }
                 *pTempResult = log(*pTempNumberB);
             } else if (pCurrent->type == SQRT) {
                 Stack_PopTo(pNumberStack, pTempNumberB);
                 if (*pTempNumberB < 0) {
-                    fprintf(stderr, SQUARE_ROOT_ERROR_MESSAGE);
+                    fprintf(stderr, DOMAIN_ERROR_MESSAGE);
                     exit(EXIT_FAILURE);
                 }
                 *pTempResult = sqrt(*pTempNumberB);
