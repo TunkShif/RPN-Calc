@@ -66,6 +66,10 @@ Token *Token_Tokenize(char *str) {
                 current = Token_NewToken(current, LOG, str + start, i - start);
             } else if (strcmp(temp, "sqrt") == 0) {
                 current = Token_NewToken(current, SQRT, str + start, i - start);
+            } else if (strcmp(temp, "asin") == 0) {
+                current = Token_NewToken(current, ASIN, str + start, i - start);
+            } else if (strcmp(temp, "acos") == 0) {
+                current = Token_NewToken(current, ACOS, str + start, i - start);
             } else {
                 return NULL;
             }

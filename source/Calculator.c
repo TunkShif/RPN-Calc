@@ -36,6 +36,8 @@ bool IsUnaryOperator(TokenType type) {
         case COS:
         case LOG:
         case SQRT:
+        case ASIN:
+        case ACOS:
             return true;
         default:
             return false;
@@ -150,6 +152,12 @@ double CalculateFromSuffix(Token *token) {
             } else if (pCurrent->type == COS) {
                 Stack_PopTo(pNumberStack, pTempNumberB);
                 *pTempResult = cos(*pTempNumberB);
+            } else if (pCurrent->type == ASIN) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = asin(*pTempNumberB);
+            } else if (pCurrent->type == ACOS) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = acos(*pTempNumberB);
             } else if (pCurrent->type == LOG) {
                 Stack_PopTo(pNumberStack, pTempNumberB);
                 if (*pTempNumberB < 0) {

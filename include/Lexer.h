@@ -10,7 +10,7 @@
  */
 typedef enum TokenType {
     BASE, NUM, ADD, MINUS, MUL, DIV, POS, NEG,
-    SIN, COS, LOG, SQRT, LPAREN, RPAREN
+    SIN, COS, ASIN, ACOS, LOG, SQRT, LPAREN, RPAREN
 } TokenType;
 
 /**

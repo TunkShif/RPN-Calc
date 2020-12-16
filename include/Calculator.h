@@ -3,8 +3,8 @@
 #include "Lexer.h"
 #include <stdbool.h>
 #define INVALID_EXPRESSION_MESSAGE "ERROR: Invalid expression! Exiting...\n"
-#define DIVISION_BY_ZERO_MESSAGE "ERROR: Division by zero! Exiting...\n"
-#define DOMAIN_ERROR_MESSAGE "ERROR: Out of the domain of the function! Exiting...\n"
+#define DIVISION_BY_ZERO_MESSAGE   "ERROR: Division by zero! Exiting...\n"
+#define DOMAIN_ERROR_MESSAGE       "ERROR: Out of the domain of the function! Exiting...\n"
 
 /**
  * Get the priority of an operator
