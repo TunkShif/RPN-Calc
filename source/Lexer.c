@@ -97,12 +97,10 @@ void Token_Print(Token *head) {
 }
 
 void Token_Free(Token *head) {
-    Token *current = head;
-    while (head->next != NULL) {
-        current = head->next;
-        head->next = current->next;
+    Token *current = NULL;
+    while (head != NULL) {
+        current = head;
+        head = head->next;
         free(current);
     }
-    free(head);
-    head = NULL;
 }

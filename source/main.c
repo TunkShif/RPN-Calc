@@ -12,7 +12,7 @@
                                "Calc                 Enter the REPL\n" \
                                "    -e <expression>  Calculate from the given expression\n" \
                                "    -f <path>        Calculate from the given text file\n"
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 int main(int argc, char **argv) {
@@ -23,11 +23,12 @@ int main(int argc, char **argv) {
     printf("\n");
     double result = CalculateFromSuffix(new);
     printf("%.2lf", result);
+    Token_Free(new);
     return 0;
 }
 #else
 int main(int argc, char **argv) {
-    double result = 0;
+    double result;
     Token *pToken = NULL;
     char tempString[MAX_INPUT_LENGTH] = {'\0'};
 
