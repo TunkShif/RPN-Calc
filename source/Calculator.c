@@ -20,6 +20,8 @@ int GetPriority(TokenType type) {
         case NEG:
         case SIN:
         case COS:
+        case ASIN:
+        case ACOS:
         case LOG:
         case SQRT:
             return 4;
