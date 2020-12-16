@@ -43,6 +43,8 @@ Token *Token_Tokenize(char *str) {
             current = Token_NewToken(current, MUL, str + i, 1);
         } else if (str[i] == '/') {
             current = Token_NewToken(current, DIV, str + i, 1);
+        } else if (str[i] == '^') {
+            current = Token_NewToken(current, POW, str + i, 1);
         } else if (isdigit(str[i])) {
             int start = i;
             while (isdigit(str[i]) || str[i] == '.') {

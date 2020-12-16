@@ -12,11 +12,12 @@
                                "Calc                 Enter the REPL\n" \
                                "    -e <expression>  Calculate from the given expression\n" \
                                "    -f <path>        Calculate from the given text file\n"
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG
 int main(int argc, char **argv) {
-    Token *token = Token_Tokenize("(-1+2*3)-sin(2*3)\n");
+//    Token *token = Token_Tokenize("(-1+2*3)-sin(2*3)\n");
+    Token *token = Token_Tokenize("2+3^(3-1)+6\n");
     Token *new = InfixToSuffix(token);
     Token_Print(new);
     printf("\n");

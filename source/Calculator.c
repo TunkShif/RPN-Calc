@@ -20,10 +20,11 @@ int GetPriority(TokenType type) {
         case NEG:
         case SIN:
         case COS:
+        case LOG:
+        case POW:
+        case SQRT:
         case ASIN:
         case ACOS:
-        case LOG:
-        case SQRT:
             return 4;
         default:
             return 0;
@@ -73,7 +74,6 @@ Token *InfixToSuffix(Token *token) {
     Token *pCurrent = token;
     Token *pTemp = NULL;
 
-    // create a stack base token
     Token base = {BASE, "#", NULL};
 
     LinkedStack *pOperatorStack = LinkedStack_NewStack();
@@ -175,6 +175,10 @@ double CalculateFromSuffix(Token *token) {
                     exit(EXIT_FAILURE);
                 }
                 *pTempResult = sqrt(*pTempNumberB);
+            } else if (pCurrent->type == POW) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                Stack_PopTo(pNumberStack, pTempNumberA);
+                *pTempResult = pow(*pTempNumberA, *pTempNumberB);
             }
             Stack_Push(pNumberStack, pTempResult);
         }
