@@ -71,6 +71,7 @@ Token *InfixToSuffix(Token *token) {
     Token *pCurrent = token;
     Token *pTemp = NULL;
 
+    // create a stack base token
     Token base = {BASE, "#", NULL};
 
     LinkedStack *pOperatorStack = LinkedStack_NewStack();
