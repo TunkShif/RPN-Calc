@@ -2,7 +2,6 @@
 #define CALC_LEXER_H
 #define MAX_TOKEN_LENGTH 10
 
-
 typedef enum TokenType {
     BASE = 128, NUM, ADD, MINUS, MUL, DIV, POS, NEG,
     SIN, COS, LOG, SQRT, LPAREN, RPAREN
