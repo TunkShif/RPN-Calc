@@ -1,4 +1,5 @@
 #include "../include/LinkedStack.h"
+#include <stdlib.h>
 
 LinkedStack *LinkedStack_NewStack(void) {
     LinkedStack *pStack = (LinkedStack *) malloc(sizeof(LinkedStack));
@@ -14,7 +15,7 @@ int LinkedStack_Length(LinkedStack *pStack) {
     return pStack->pList->length;
 }
 
-Status *LinkedStack_Push(LinkedStack *pStack, void *pElement) {
+int LinkedStack_Push(LinkedStack *pStack, void *pElement) {
     return LinkedList_Append(pStack->pList, pElement);
 }
 
@@ -29,11 +30,11 @@ void *LinkedStack_Pop(LinkedStack *pStack, void (*freeData)()) {
     return pData;
 }
 
-Status *LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)()) {
+int LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)()) {
     int length = LinkedList_Length(pStack->pList);
     LinkedListNode *pLastNode = LinkedList_GetNodeAt(pStack->pList, length - 1);
     if (pLastNode == NULL) {
-        return Status_NullPointerError();
+        return 1;
     }
     *pDestination = LinkedList_GetDataFromNode(pLastNode);
     return LinkedList_DeleteLastNode(pStack->pList, freeDara);
@@ -52,9 +53,9 @@ char LinkedStack_GetTopChar(LinkedStack *pStack) {
     return *((char *) LinkedStack_GetTop(pStack));
 }
 
-Status *LinkedStack_Traverse(LinkedStack *pStack, Status *(*func)()) {
-    return LinkedList_Traverse(pStack->pList, func);
-}
+//int LinkedStack_Traverse(LinkedStack *pStack, int (*func)()) {
+//    return LinkedList_Traverse(pStack->pList, func);
+//}
 
 void LinkedStack_Free(LinkedStack *pStack, void (*freeData)()) {
     LinkedList_FreeList(pStack->pList, freeData);

@@ -1,72 +1,190 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include "../include/Calculator.h"
+#include "../include/Stack.h"
+#include "../include/LinkedStack.h"
 
-float CalculateFromSuffixExpression(char *str) {
-    int length = strlen(str);
-    float *pTempResult = (float *) malloc(sizeof(float));
-    float *pTempOperandA = (float *) malloc(sizeof(float));
-    float *pTempOperandB = (float *) malloc(sizeof(float));
+int GetPriority(TokenType type) {
+    switch (type) {
+        case LPAREN:
+            return 1;
+        case ADD:
+        case MINUS:
+            return 2;
+        case MUL:
+        case DIV:
+            return 3;
+        case POS:
+        case NEG:
+        case SIN:
+        case COS:
+        case LOG:
+        case SQRT:
+            return 4;
+        default:
+            return 0;
+    }
+}
 
-    String *pTempStr = NULL;
-    String *pStr = String_NewStringFrom(str);
+bool IsUnaryOperator(TokenType type) {
+    switch (type) {
+        case POS:
+        case NEG:
+        case SIN:
+        case COS:
+        case LOG:
+        case SQRT:
+            return true;
+        default:
+            return false;
+    }
+}
 
-    if (String_GetCharAt(pStr, length - 1) != ' ') {
-        String_AppendChar(pStr, ' ');
-        length = String_GetLength(pStr);
+double ConvertStringToFloat(const char *str) {
+    int i = 0;
+    double value = 0;
+    while (str[i] != '\0' && str[i] != '.') {
+        value = value * 10 + (str[i] - '0');
+        i++;
+    }
+    if (str[i] == '\0') {
+        return value;
+    } else if (str[i++] == '.') {
+        double weight = 0.1;
+        while (str[i] != '\0') {
+            value = value + (str[i] - '0') * weight;
+            weight = weight / 10;
+            i++;
+        }
+    }
+    return value;
+}
+
+Token *InfixToSuffix(Token *token) {
+    Token head;
+    head.next = NULL;
+    Token *pOutput = &head;
+    Token *pCurrent = token;
+    Token *pTemp = NULL;
+
+    Token base = {BASE, "#", NULL};
+
+    LinkedStack *pOperatorStack = LinkedStack_NewStack();
+    LinkedStack_Push(pOperatorStack, &base);
+
+    while (pCurrent != NULL) {
+        if (pCurrent->type == NUM) {
+            pOutput = Token_NewToken(pOutput, NUM, pCurrent->value, strlen(pCurrent->value));
+        } else if (pCurrent->type == LPAREN) {
+            LinkedStack_Push(pOperatorStack, pCurrent);
+        } else if (pCurrent->type == RPAREN) {
+            while (((Token *) LinkedStack_GetTop(pOperatorStack))->type != LPAREN) {
+                pTemp = (Token *) LinkedStack_Pop(pOperatorStack, FreeData);
+                pOutput = Token_NewToken(pOutput, pTemp->type, pTemp->value, strlen(pTemp->value));
+            }
+            LinkedStack_Pop(pOperatorStack, FreeData);
+        } else {
+            while (GetPriority(pCurrent->type) <= GetPriority(((Token *) LinkedStack_GetTop(pOperatorStack))->type)) {
+                pTemp = (Token *) LinkedStack_Pop(pOperatorStack, FreeData);
+                pOutput = Token_NewToken(pOutput, pTemp->type, pTemp->value, strlen(pTemp->value));
+                if (((Token *) LinkedStack_GetTop(pOperatorStack))->type == BASE) {
+                    break;
+                }
+            }
+            LinkedStack_Push(pOperatorStack, pCurrent);
+        }
+        pCurrent = pCurrent->next;
     }
 
-    GenericStack *pNumberStack = Stack_NewStack(DEFAULT_STACK_INIT_SIZE, sizeof(float));
+    while (((Token *) LinkedStack_GetTop(pOperatorStack))->type != BASE) {
+        pTemp = (Token *) LinkedStack_Pop(pOperatorStack, FreeData);
+        pOutput = Token_NewToken(pOutput, pTemp->type, pTemp->value, strlen(pTemp->value));
+    }
 
-    int op = 0, ed;
-    for (int i = 0; i < length; i++) {
-        if (pStr->str[i] == ' ') {
-            ed = i;
-            pTempStr = String_Slice(pStr, op, ed - 1);
-            if (IsValidNumber(pTempStr->str)) {
-                *pTempResult = ConvertStringToFloat(pTempStr->str);
-                Stack_Push(pNumberStack, pTempResult);
-            } else if (String_IsSingleChar(pTempStr)) {
-                char ch = pTempStr->str[0];
-                Stack_PopTo(pNumberStack, pTempOperandA);
-                Stack_PopTo(pNumberStack, pTempOperandB);
-                switch (ch) {
-                    case '+':
-                        *pTempResult = *pTempOperandA + *pTempOperandB;
-                        break;
-                    case '-':
-                        *pTempResult = *pTempOperandB - *pTempOperandA;
-                        break;
-                    case '*':
-                        *pTempResult = *pTempOperandA * *pTempOperandB;
-                        break;
-                    case '/':
-                        if (*pTempOperandA == 0) {
-                            return NAN;
-                        }
-                        *pTempResult = *pTempOperandB / *pTempOperandA;
-                        break;
-                    default:
-                        break;
+    return head.next;
+}
+
+double CalculateFromSuffix(Token *token) {
+    Stack *pNumberStack = Stack_NewStack(DEFAULT_STACK_INIT_SIZE, sizeof(double));
+    Token *pCurrent = token;
+    double *pTempResult = (double *) malloc(sizeof(double));
+    double *pTempNumberA = (double *) malloc(sizeof(double));
+    double *pTempNumberB = (double *) malloc(sizeof(double));
+
+    while (pCurrent != NULL) {
+        if (pCurrent->type == NUM) {
+            *pTempResult = ConvertStringToFloat(pCurrent->value);
+            Stack_Push(pNumberStack, pTempResult);
+        } else {
+            if (pCurrent->type == ADD) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                Stack_PopTo(pNumberStack, pTempNumberA);
+                *pTempResult = *pTempNumberA + *pTempNumberB;
+            } else if (pCurrent->type == MINUS) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                Stack_PopTo(pNumberStack, pTempNumberA);
+                *pTempResult = *pTempNumberA - *pTempNumberB;
+            } else if (pCurrent->type == MUL) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                Stack_PopTo(pNumberStack, pTempNumberA);
+                *pTempResult = *pTempNumberA * *pTempNumberB;
+            } else if (pCurrent->type == DIV) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                Stack_PopTo(pNumberStack, pTempNumberA);
+                if (*pTempNumberB == 0) {
+                    fprintf(stderr, DIVISION_BY_ZERO_MESSAGE);
+                    exit(EXIT_FAILURE);
                 }
-                Stack_Push(pNumberStack, pTempResult);
+                *pTempResult = *pTempNumberA / *pTempNumberB;
+            } else if (pCurrent->type == POS) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = *pTempNumberB;
+            } else if (pCurrent->type == NEG) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = - (*pTempNumberB);
+            } else if (pCurrent->type == SIN) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = sin(*pTempNumberB);
+            } else if (pCurrent->type == COS) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = cos(*pTempNumberB);
+            } else if (pCurrent->type == LOG) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                *pTempResult = log(*pTempNumberB);
+            } else if (pCurrent->type == SQRT) {
+                Stack_PopTo(pNumberStack, pTempNumberB);
+                if (*pTempNumberB < 0) {
+                    fprintf(stderr, SQUARE_ROOT_ERROR_MESSAGE);
+                    exit(EXIT_FAILURE);
+                }
+                *pTempResult = sqrt(*pTempNumberB);
             }
-            i = ed;
-            op = ed + 1;
+            Stack_Push(pNumberStack, pTempResult);
         }
-        String_Free(pTempStr);
-        pTempStr = NULL;
+        *pTempResult = 0;
+        *pTempNumberA = 0;
+        *pTempNumberB = 0;
+        pCurrent = pCurrent->next;
+        if (pCurrent != NULL) {
+            if (Stack_GetLength(pNumberStack) == 1 && !IsUnaryOperator(pCurrent->type) && pCurrent->type != NUM) {
+                fprintf(stderr, INVALID_EXPRESSION_MESSAGE);
+                exit(EXIT_FAILURE);
+            }
+        }
     }
 
     Stack_PopTo(pNumberStack, pTempResult);
-    float result = *pTempResult;
+    double result = *pTempResult;
 
-    Stack_Free(pNumberStack);
-    String_Free(pTempStr);
     free(pTempResult);
-    free(pTempOperandA);
-    free(pTempOperandB);
-    pTempResult = NULL;
-    pTempOperandA = NULL;
-    pTempOperandB = NULL;
-
+    free(pTempNumberA);
+    free(pTempNumberB);
+    Stack_Free(pNumberStack);
     return result;
+}
+
+void FreeData() {
+    return;
 }

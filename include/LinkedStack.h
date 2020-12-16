@@ -1,5 +1,5 @@
-#ifndef RPN_CALC_LINKEDSTACK_H
-#define RPN_CALC_LINKEDSTACK_H
+#ifndef CALC_LINKEDSTACK_H
+#define CALC_LINKEDSTACK_H
 #include "LinkedList.h"
 
 /*
@@ -54,7 +54,7 @@ int LinkedStack_Length(LinkedStack *pStack);
  * @return:
  *     Status*
  */
-Status *LinkedStack_Push(LinkedStack *pStack, void *pElement);
+int LinkedStack_Push(LinkedStack *pStack, void *pElement);
 
 /*
  * LinkedStack_Pop
@@ -76,7 +76,7 @@ void *LinkedStack_Pop(LinkedStack *pStack, void (*freeData)());
  * @return:
  *     Status*
  */
-Status *LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)());
+int LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)());
 
 /*
  * LinkedStack_GetTop
@@ -98,11 +98,11 @@ int LinkedStack_GetTopInt(LinkedStack *pStack);
  * Traverse the stack, and perform the function on each element
  * @param:
  *     LinkedStack *pStack: a pointer to the stack-type struct
- *     Status *(*func)(): a function operating on the stack element
+ *     int (*func)(): a function operating on the stack element
  * @return:
  *     Status*
  */
-Status *LinkedStack_Traverse(LinkedStack *pStack, Status *(*func)());
+int LinkedStack_Traverse(LinkedStack *pStack, int (*func)());
 
 /*
  * LinkedStack_Free
@@ -111,4 +111,5 @@ Status *LinkedStack_Traverse(LinkedStack *pStack, Status *(*func)());
  *     LinkedStack *pStack: a pointer to the stack-type struct
  */
 void LinkedStack_Free(LinkedStack *pStack, void (*freeData)());
+
 #endif

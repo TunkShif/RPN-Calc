@@ -1,8 +1,6 @@
-#ifndef RPN_CALC_LINKEDLIST_H
-#define RPN_CALC_LINKEDLIST_H
-#include <stdlib.h>
+#ifndef CALC_LINKEDLIST_H
+#define CALC_LINKEDLIST_H
 #include <stdbool.h>
-#include "Status.h"
 
 /*
  * LinkedListNode
@@ -45,12 +43,6 @@ LinkedListNode *LinkedList_NewNode(void *pData);
  *     ElementType: a pointer to the data variable
  */
 void *LinkedList_GetDataFromNode(LinkedListNode *pNode);
-
-char LinkedList_GetCharFromNode(LinkedListNode *pNode);
-
-int LinkedList_GetIntFromNode(LinkedListNode *pNode);
-
-float LinkedList_GetFloatFromNode(LinkedListNode *pNode);
 
 /*
  * LinkedList_NewList
@@ -96,31 +88,7 @@ LinkedListNode *LinkedList_GetNodeAt(LinkedList *pList, int index);
  * @return:
  *     Status*
  */
-Status *LinkedList_InsertAtHead(LinkedList *pList, void *pData);
-
-/*
- * LinkedList_InsertAfter
- * Insert a new node after the given node
- * @param:
- *     LinkedList *pList: a pointer to the list
- *     LinkedListNode *pNode: a pointer to the node
- *     ElementType pData: a pointer to the data variable
- * @return:
- *     Status*
- */
-Status *LinkedList_InsertAfter(LinkedList *pList, LinkedListNode *pNode, void *pData);
-
-/*
- * LinkedList_InsertAt
- * Insert a new node after the node at the given index
- * @param:
- *     LinkedList *pList: a pointer to the list
- *     int index: the index of the node in the list
- *     ElementType pData: a pointer to the data variable
- * @return:
- *     Status*
- */
-Status *LinkedList_InsertAt(LinkedList *pList, int index, void *pData);
+int LinkedList_InsertAtHead(LinkedList *pList, void *pData);
 
 /*
  * LinkedList_Append
@@ -131,7 +99,7 @@ Status *LinkedList_InsertAt(LinkedList *pList, int index, void *pData);
  * @return:
  *     Status*
  */
-Status *LinkedList_Append(LinkedList *pList, void *pData);
+int LinkedList_Append(LinkedList *pList, void *pData);
 
 /*
  * LinkedList_DeleteHeadNode
@@ -142,7 +110,7 @@ Status *LinkedList_Append(LinkedList *pList, void *pData);
  * @return:
  *     Status*
  */
-Status *LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)());
+int LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)());
 
 /*
  * LinkedList_DeleteLastNode
@@ -153,7 +121,7 @@ Status *LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)());
  * @return:
  *     Status*
  */
-Status *LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)());
+int LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)());
 
 /*
  * LinkedList_DeleteNodeAt
@@ -165,7 +133,7 @@ Status *LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)());
  * @return:
  *     Status*
  */
-Status *LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)());
+int LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)());
 
 /*
  * LinkedList_FindNodeByKey
@@ -184,11 +152,11 @@ LinkedListNode *LinkedList_FindNodeByKey(LinkedList *pList, void *pKey, bool (*i
  * Traverse the list, and perform the function on each element
  * @param:
  *     LinkedList *pList: a pointer to the list
- *     Status *(*func)(): a function operating on the stack element
+ *     int (*func)(): a function operating on the stack element
  * @return:
  *     Status*
  */
-Status *LinkedList_Traverse(LinkedList *pList, Status *(*func)());
+int LinkedList_Traverse(LinkedList *pList, int (*func)());
 
 /*
  * LinkedList_FreeNode

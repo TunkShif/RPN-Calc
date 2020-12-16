@@ -1,4 +1,5 @@
 #include "../include/LinkedList.h"
+#include <stdlib.h>
 
 LinkedListNode *LinkedList_NewNode(void *pData) {
     LinkedListNode *pNode = (LinkedListNode *) malloc(sizeof(LinkedListNode));
@@ -51,57 +52,35 @@ LinkedListNode *LinkedList_GetNodeAt(LinkedList *pList, int index) {
     return pCurrentNode;
 }
 
-Status *LinkedList_InsertAtHead(LinkedList *pList, void *pData) {
+int LinkedList_InsertAtHead(LinkedList *pList, void *pData) {
     LinkedListNode *pNewNode = LinkedList_NewNode(pData);
     if (pNewNode == NULL) {
-        return Status_MallocFailed();
+        return 1;
     }
     pNewNode->pNextNode = pList->pHeadNode;
     pList->pHeadNode = pNewNode;
     pList->length++;
-    return Status_ActionSucceeded();
+    return 0;
 }
 
-Status *LinkedList_InsertAfter(LinkedList *pList, LinkedListNode *pNode, void *pData) {
+int LinkedList_InsertAfter(LinkedList *pList, LinkedListNode *pNode, void *pData) {
     if (pNode == NULL) {
         return LinkedList_InsertAtHead(pList, pData);
     }
     LinkedListNode *pNewNode = LinkedList_NewNode(pData);
     if (pNewNode == NULL) {
-        return Status_MallocFailed();
+        return 1;
     }
     pNewNode->pNextNode = pNode->pNextNode;
     pNode->pNextNode = pNewNode;
     pList->length++;
-    return Status_ActionSucceeded();
+    return 0;
 }
 
-Status *LinkedList_InsertAt(LinkedList *pList, int index, void *pData) {
-    int length = LinkedList_Length(pList);
-    if ((index >= length) || (index < 0)) {
-        return Status_OutOfIndex();
-    } else if (index == 0) {
-        return LinkedList_InsertAtHead(pList, pData);
-    } else if (index == length - 1) {
-        return LinkedList_Append(pList, pData);
-    } else {
-        LinkedListNode *pNewNode = LinkedList_NewNode(pData);
-        LinkedListNode *pCurrentNode = pList->pHeadNode;
-        int i;
-        for (i = 0; i < index; i++) {
-            pCurrentNode = pCurrentNode->pNextNode;
-        }
-        pNewNode->pNextNode = pCurrentNode->pNextNode;
-        pCurrentNode->pNextNode = pNewNode;
-        pList->length++;
-        return Status_ActionSucceeded();
-    }
-}
-
-Status *LinkedList_Append(LinkedList *pList, void *pData) {
+int LinkedList_Append(LinkedList *pList, void *pData) {
     LinkedListNode *pNewNode = LinkedList_NewNode(pData);
     if (pNewNode == NULL) {
-        return Status_NullPointerError();
+        return 1;
     }
 
     if (LinkedList_IsEmpty(pList)) {
@@ -112,30 +91,30 @@ Status *LinkedList_Append(LinkedList *pList, void *pData) {
         pCurrentNode->pNextNode = pNewNode;
     }
     pList->length++;
-    return Status_ActionSucceeded();
+    return 0;
 }
 
-Status *LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)()) {
+int LinkedList_DeleteHeadNode(LinkedList *pList, void (*freeData)()) {
     if (LinkedList_IsEmpty(pList)) {
-        return Status_ListEmptyError();
+        return 1;
     }
     LinkedListNode *pTempNode = pList->pHeadNode;
     pList->pHeadNode = pTempNode->pNextNode;
     LinkedList_FreeNode(pTempNode, freeData);
     pTempNode = NULL;
     pList->length--;
-    return Status_ActionSucceeded();
+    return 0;
 }
 
-Status *LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)()) {
+int LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)()) {
     if (LinkedList_IsEmpty(pList)) {
-        return Status_ListEmptyError();
+        return 1;
     }
 
     LinkedListNode *pTempNode = pList->pHeadNode;
     if (pTempNode->pNextNode == NULL) {
         LinkedList_FreeNode(pTempNode, freeData);
-        return Status_ActionSucceeded();
+        return 0;
     }
 
     int length = LinkedList_Length(pList);
@@ -145,17 +124,17 @@ Status *LinkedList_DeleteLastNode(LinkedList *pList, void (*freeData)()) {
     pLastNode = NULL;
     pTempNode->pNextNode = NULL;
     pList->length--;
-    return Status_ActionSucceeded();
+    return 0;
 }
 
-Status *LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)()) {
+int LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)()) {
     if (LinkedList_IsEmpty(pList)) {
-        return Status_ListEmptyError();
+        return 1;
     }
 
     int length = LinkedList_Length(pList);
     if (index >= length || index < 0) {
-        return Status_OutOfIndex();
+        return 1;
     } else if (index == 0) {
         return LinkedList_DeleteHeadNode(pList, freeData);
     } else if (index == length - 1) {
@@ -177,7 +156,7 @@ Status *LinkedList_DeleteNodeAt(LinkedList *pList, int index, void (*freeData)()
         LinkedList_FreeNode(pTempNode, freeData);
         pTempNode = NULL;
     }
-    return Status_ActionSucceeded();
+    return 0;
 }
 
 LinkedListNode *LinkedList_FindNodeByKey(LinkedList *pList, void *pKey, bool (*isEqual)()) {
@@ -203,20 +182,20 @@ void LinkedList_Clear(LinkedList *pList, void (*freeData)()) {
     pList->length = 0;
 }
 
-Status *LinkedList_Traverse(LinkedList *pList, Status *(*func)()) {
-    if (LinkedList_IsEmpty(pList)) {
-        return Status_ListEmptyError();
-    }
-    LinkedListNode *pCurrentNode;
-    Status *pStatus;
-    for (pCurrentNode = pList->pHeadNode; pCurrentNode != NULL; pCurrentNode = pCurrentNode->pNextNode) {
-        pStatus = func(LinkedList_GetDataFromNode(pCurrentNode));
-        if (pStatus->code == ERROR) {
-            return pStatus;
-        }
-    }
-    return Status_ActionSucceeded();
-}
+//int LinkedList_Traverse(LinkedList *pList, int (*func)()) {
+//    if (LinkedList_IsEmpty(pList)) {
+//        return Status_ListEmptyError();
+//    }
+//    LinkedListNode *pCurrentNode;
+//    int pStatus;
+//    for (pCurrentNode = pList->pHeadNode; pCurrentNode != NULL; pCurrentNode = pCurrentNode->pNextNode) {
+//        pStatus = func(LinkedList_GetDataFromNode(pCurrentNode));
+//        if (pStatus->code == ERROR) {
+//            return pStatus;
+//        }
+//    }
+//    return 0;
+//}
 
 void LinkedList_FreeNode(LinkedListNode *pNode, void (*freeData)()) {
     if (pNode != NULL) {
