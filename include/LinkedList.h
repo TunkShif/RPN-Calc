@@ -156,7 +156,7 @@ LinkedListNode *LinkedList_FindNodeByKey(LinkedList *pList, void *pKey, bool (*i
  * Traverse the list, and perform the function on each element
  * @param:
  *     LinkedList *pList: a pointer to the list
- *     int (*func)(): a function operating on the stack element
+ *     int (*func)(): a function operating on the stack element, return 0 for SUCCESS, 1 for ERROR
  * @return:
  *     int: 0 for SUCCESS, 1 for ERROR
  */

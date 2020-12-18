@@ -4,22 +4,22 @@
 #include <string.h>
 #include <ctype.h>
 
-Token *Token_NewToken(Token *current, TokenType type, char *start, int length) {
-    Token *token = calloc(1, sizeof(Token));
-    if (token == NULL) {
+Token *Token_NewToken(Token *pCurrent, TokenType type, char *start, int length) {
+    Token *pToken = calloc(1, sizeof(Token));
+    if (pToken == NULL) {
         return NULL;
     }
-    token->type = type;
-    memset(token->value, '\0', MAX_TOKEN_LENGTH);
-    memcpy(token->value, start, length);
-    current->next = token;
-    return token;
+    pToken->type = type;
+    memset(pToken->value, '\0', MAX_TOKEN_LENGTH);
+    memcpy(pToken->value, start, length);
+    pCurrent->next = pToken;
+    return pToken;
 }
 
 Token *Token_Tokenize(char *str) {
     Token head;
     head.next = NULL;
-    Token *current = &head;
+    Token *pCurrent = &head;
 
     int i = 0;
 
@@ -29,28 +29,28 @@ Token *Token_Tokenize(char *str) {
             continue;
         } else if (str[i] == '+') {
             if (i == 0 || str[i - 1] == '(') {
-                current = Token_NewToken(current, POS, str + i, 1);
+                pCurrent = Token_NewToken(pCurrent, POS, str + i, 1);
             } else {
-                current = Token_NewToken(current, ADD, str + i, 1);
+                pCurrent = Token_NewToken(pCurrent, ADD, str + i, 1);
             }
         } else if (str[i] == '-') {
             if (i == 0 || str[i - 1] == '(') {
-                current = Token_NewToken(current, NEG, str + i, 1);
+                pCurrent = Token_NewToken(pCurrent, NEG, str + i, 1);
             } else {
-                current = Token_NewToken(current, MINUS, str + i, 1);
+                pCurrent = Token_NewToken(pCurrent, MINUS, str + i, 1);
             }
         } else if (str[i] == '*') {
-            current = Token_NewToken(current, MUL, str + i, 1);
+            pCurrent = Token_NewToken(pCurrent, MUL, str + i, 1);
         } else if (str[i] == '/') {
-            current = Token_NewToken(current, DIV, str + i, 1);
+            pCurrent = Token_NewToken(pCurrent, DIV, str + i, 1);
         } else if (str[i] == '^') {
-            current = Token_NewToken(current, POW, str + i, 1);
+            pCurrent = Token_NewToken(pCurrent, POW, str + i, 1);
         } else if (isdigit(str[i])) {
             int start = i;
             while (isdigit(str[i]) || str[i] == '.') {
                 i++;
             }
-            current = Token_NewToken(current, NUM, str + start, i - start);
+            pCurrent = Token_NewToken(pCurrent, NUM, str + start, i - start);
             continue;
         } else if (isalpha(str[i])) {
             int start = i;
@@ -61,25 +61,25 @@ Token *Token_Tokenize(char *str) {
             memset(temp, '\0', MAX_TOKEN_LENGTH);
             memcpy(temp, str + start, i - start);
             if (strcmp(temp, "sin") == 0) {
-                current = Token_NewToken(current, SIN, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, SIN, str + start, i - start);
             } else if (strcmp(temp, "cos") == 0) {
-                current = Token_NewToken(current, COS, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, COS, str + start, i - start);
             } else if (strcmp(temp, "ln") == 0) {
-                current = Token_NewToken(current, LOG, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, LOG, str + start, i - start);
             } else if (strcmp(temp, "sqrt") == 0) {
-                current = Token_NewToken(current, SQRT, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, SQRT, str + start, i - start);
             } else if (strcmp(temp, "asin") == 0) {
-                current = Token_NewToken(current, ASIN, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, ASIN, str + start, i - start);
             } else if (strcmp(temp, "acos") == 0) {
-                current = Token_NewToken(current, ACOS, str + start, i - start);
+                pCurrent = Token_NewToken(pCurrent, ACOS, str + start, i - start);
             } else {
                 return NULL;
             }
             continue;
         } else if (str[i] == '(') {
-            current = Token_NewToken(current, LPAREN, str + i, 1);
+            pCurrent = Token_NewToken(pCurrent, LPAREN, str + i, 1);
         } else if (str[i] == ')') {
-            current = Token_NewToken(current, RPAREN, str + i, 1);
+            pCurrent = Token_NewToken(pCurrent, RPAREN, str + i, 1);
         } else {
             return NULL;
         }
@@ -90,17 +90,17 @@ Token *Token_Tokenize(char *str) {
     return head.next;
 }
 
-void Token_Print(Token *head) {
-    for (Token *current = head; current != NULL ; current = current->next) {
-        printf("%s ", current->value);
+void Token_Print(Token *pHead) {
+    for (Token *pCurrent = pHead; pCurrent != NULL ; pCurrent = pCurrent->next) {
+        printf("%s ", pCurrent->value);
     }
 }
 
-void Token_Free(Token *head) {
-    Token *current = NULL;
-    while (head != NULL) {
-        current = head;
-        head = head->next;
-        free(current);
+void Token_Free(Token *pHead) {
+    Token *pCurrent = NULL;
+    while (pHead != NULL) {
+        pCurrent = pHead;
+        pHead = pHead->next;
+        free(pCurrent);
     }
 }
