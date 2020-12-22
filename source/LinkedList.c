@@ -57,8 +57,12 @@ int LinkedList_InsertAtHead(LinkedList *pList, void *pData) {
     if (pNewNode == NULL) {
         return 1;
     }
-    pNewNode->pNextNode = pList->pHeadNode;
-    pList->pHeadNode = pNewNode;
+    if (LinkedList_IsEmpty(pList)) {
+        pList->pHeadNode = pNewNode;
+    } else {
+        pNewNode->pNextNode = pList->pHeadNode;
+        pList->pHeadNode = pNewNode;
+    }
     pList->length++;
     return 0;
 }

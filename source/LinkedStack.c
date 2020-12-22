@@ -2,60 +2,54 @@
 #include <stdlib.h>
 
 LinkedStack *LinkedStack_NewStack(void) {
-    LinkedStack *pStack = (LinkedStack *) malloc(sizeof(LinkedStack));
-    pStack->pList = LinkedList_NewList();
-    return pStack;
+    return LinkedList_NewList();
 }
 
 bool LinkedStack_IsEmpty(LinkedStack *pStack) {
-    return pStack->pList->length == 0;
+    return pStack->length == 0;
 }
 
 int LinkedStack_Length(LinkedStack *pStack) {
-    return pStack->pList->length;
+    return pStack->length;
 }
 
 int LinkedStack_Push(LinkedStack *pStack, void *pElement) {
-    return LinkedList_Append(pStack->pList, pElement);
+    return LinkedList_InsertAtHead(pStack, pElement);
 }
 
 void *LinkedStack_Pop(LinkedStack *pStack, void (*freeData)()) {
-    int length = LinkedList_Length(pStack->pList);
-    LinkedListNode *pLastNode = LinkedList_GetNodeAt(pStack->pList, length - 1);
-    if (pLastNode == NULL) {
+    LinkedListNode *pHeadNode = LinkedList_GetNodeAt(pStack, 0);
+    if (pHeadNode == NULL) {
         return NULL;
     }
-    void *pData = LinkedList_GetDataFromNode(pLastNode);
-    LinkedList_DeleteLastNode(pStack->pList, freeData);
+    void *pData = LinkedList_GetDataFromNode(pHeadNode);
+    LinkedList_DeleteHeadNode(pStack, freeData);
     return pData;
 }
 
 int LinkedStack_PopTo(LinkedStack *pStack, void **pDestination, void (*freeDara)()) {
-    int length = LinkedList_Length(pStack->pList);
-    LinkedListNode *pLastNode = LinkedList_GetNodeAt(pStack->pList, length - 1);
-    if (pLastNode == NULL) {
+    LinkedListNode *pHeadNode = LinkedList_GetNodeAt(pStack, 0);
+    if (pHeadNode == NULL) {
         return 1;
     }
-    *pDestination = LinkedList_GetDataFromNode(pLastNode);
-    return LinkedList_DeleteLastNode(pStack->pList, freeDara);
+    *pDestination = LinkedList_GetDataFromNode(pHeadNode);
+    return LinkedList_DeleteHeadNode(pStack, freeDara);
 }
 
 void *LinkedStack_GetTop(LinkedStack *pStack) {
-    int length = LinkedList_Length(pStack->pList);
-    LinkedListNode *pLastNode = LinkedList_GetNodeAt(pStack->pList, length - 1);
-    if (pLastNode == NULL) {
+    LinkedListNode *pHeadNode = LinkedList_GetNodeAt(pStack, 0);
+    if (pHeadNode == NULL) {
         return NULL;
     }
-    return LinkedList_GetDataFromNode(pLastNode);
+    return LinkedList_GetDataFromNode(pHeadNode);
 }
 
 int LinkedStack_Traverse(LinkedStack *pStack, int (*func)()) {
-    return LinkedList_Traverse(pStack->pList, func);
+    return LinkedList_Traverse(pStack, func);
 }
 
 void LinkedStack_Free(LinkedStack *pStack, void (*freeData)()) {
-    LinkedList_FreeList(pStack->pList, freeData);
-    pStack->pList = NULL;
-    free(pStack);
+    LinkedList_FreeList(pStack, freeData);
     pStack = NULL;
+    free(pStack);
 }

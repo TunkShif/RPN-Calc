@@ -2,14 +2,7 @@
 #define CALC_LINKEDSTACK_H
 #include "LinkedList.h"
 
-/*
- * LinkedStack
- * @member:
- *     LinkedList *pList
- */
-typedef struct LinkedStack {
-    LinkedList *pList;
-} LinkedStack;
+typedef LinkedList LinkedStack;
 
 /*
  * LinkedStack_NewStack

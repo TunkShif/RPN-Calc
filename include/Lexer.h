@@ -6,7 +6,7 @@
  * enum for Token Type
  * BASE: # NUM: Number
  * ADD: + MINUS: - MUL * DIV / POS: Positive NEG: Negative
- * LPAREN: ( RPAREN: )
+ * POW: ^ LPAREN: ( RPAREN: )
  */
 typedef enum TokenType {
     BASE, NUM, ADD, MINUS, MUL, DIV, POS, NEG,
