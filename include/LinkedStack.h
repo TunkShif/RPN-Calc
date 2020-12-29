@@ -6,12 +6,7 @@ typedef LinkedList LinkedStack;
 
 /*
  * LinkedStack_NewStack
- * Initiate a stack
- * @param:
- *     LinkedStack *pStack: a pointer to the stack-type struct
- *     int size: the initial size of the stack
- * @return:
- *     int: 0 for SUCCESS, 1 for ERROR
+ * Create a new stack
  */
 LinkedStack *LinkedStack_NewStack(void);
 

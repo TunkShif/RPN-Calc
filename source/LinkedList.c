@@ -9,7 +9,7 @@ LinkedListNode *LinkedList_NewNode(void *pData) {
     pNode->pData = pData;
     pNode->pNextNode = NULL;
     return pNode;
-};
+}
 
 void *LinkedList_GetDataFromNode(LinkedListNode *pNode) {
     if (pNode != NULL) {
@@ -177,7 +177,6 @@ int LinkedList_Traverse(LinkedList *pList, int (*func)()) {
         return 1;
     }
     LinkedListNode *pCurrentNode;
-    int pStatus;
     for (pCurrentNode = pList->pHeadNode; pCurrentNode != NULL; pCurrentNode = pCurrentNode->pNextNode) {
         int status = func(LinkedList_GetDataFromNode(pCurrentNode));
         if (status == 1) {
